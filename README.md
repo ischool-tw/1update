@@ -26,12 +26,11 @@
 * `git remote set-url origin https://...` 設定使用新的URL
 
 ###安裝update-git
-* `sudo git clone https://github.com/lelala/update-git.git /www/update`使用git取得程式
-* `sudo chown ec2-user -R /www/update`設定資料夾存取權限
+* `git clone https://github.com/ischool-tw/1update.git /www/update`使用git取得程式
 * `vi /www/update/config.json`修改config
 * 
 ```json
-{
+module.exports = {
     "port": 5678,
     "targets": [
         {
