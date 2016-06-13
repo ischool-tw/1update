@@ -1,0 +1,69 @@
+doctype html
+html
+    head
+        meta(charset="utf-8")
+        style.
+            body {
+                font-family: Helvetica, Tahoma, Arial, STXihei, "Microsoft YaHei", SimSun, Heiti, sans-serif;
+                background-color: #f1f1f1;
+                height: 100%;
+                -webkit-font-smoothing: antialiased;
+                -moz-osx-font-smoothing: grayscale;
+            }
+
+            .btn {
+                font-size: 20px;
+                background: #fff;
+                color: rgba(0,0,0,.67);
+                text-decoration: none;
+                padding: 5px 12px;
+                margin-right: 10px;
+                box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);
+                cursor: pointer;
+            }
+
+            .btn:hover {
+                background-color: rgba(0,0,0,.17);
+            }
+
+            div {
+                padding: 10px;
+            }
+
+            input {
+                width: 600px;
+                padding: 10px;
+                margin-right: 10px;
+                font-size: 16px;
+            }
+
+            pre {
+                font-size: 16px;
+                line-height: 20px
+            }
+    body
+        div
+            each item in items
+                a(href=item, class="btn") #{item}
+
+        if name
+            div
+                h2 Version : #{name}
+                input(type="text", placeholder="Version Number", id="version")
+                span(class="btn", onclick="deploy()")='Deploy'
+                pre(id="message")
+                script.
+                    function deploy() {
+                        document.querySelector('#message').innerHTML = '';
+
+                        var xhr = new XMLHttpRequest();
+                        xhr.open("POST", '/!{name}', true);
+                        xhr.setRequestHeader("Content-Type", 'application/json');
+                        xhr.responseType = 'json';
+                        xhr.onload = function() {
+                            document.querySelector('#message').innerHTML = this.response.result;
+                        };
+                        xhr.send(JSON.stringify({
+                            version: document.querySelector('#version').value
+                        }));
+                    }
